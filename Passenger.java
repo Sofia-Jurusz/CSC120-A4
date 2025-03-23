@@ -1,6 +1,8 @@
-public class Passenger {
+public class Passenger implements PassengerRequirements{
     
+    //attributes
     private String name;
+    private Car passengersCar;
 
     /**
      * constructor for passenger
@@ -8,6 +10,7 @@ public class Passenger {
      */
     public Passenger(String name) {
         this.name = name;
+        this.passengersCar = null;
     }
 
     /**
@@ -19,13 +22,25 @@ public class Passenger {
     }
 
     /**
+     * accessor for the passenger's car
+     * @return passengersCar
+     */
+    public Car getPassengerCar(){
+        return this.passengersCar;
+    }
+
+
+    /**
      * Lets a passenger board a Car c
      * calls on the addPassenger method from Car class
      * @param c Car
      */
     public void boardCar(Car c){
         if (c.addPassenger(this)){
+            this.passengersCar = c;
             System.out.println(this.name + " has succesfully boarded!");
+        } else {
+            System.out.println(this.name + " has not sucessfully boarded the car");
         }
         return;
     }
@@ -41,13 +56,22 @@ public class Passenger {
         }
     }
 
+    //main for testing
     public static void main(String[] args) {
-        Car carOne = new Car(10);
-        Passenger Walter = new Passenger("Walter");
-        Walter.boardCar(carOne);
+        Car carOne = new Car(1);
+        Passenger walter = new Passenger("Walter");
+        Passenger susan = new Passenger("Susan");
+        System.out.println("----walter is boarding....");
+        walter.boardCar(carOne);
         carOne.printManifest();
-        Walter.getOffCar(carOne);
+        System.out.println("---susan is leaving...");
+        susan.getOffCar(carOne);
+        System.out.println("----Susan is boarding...");
+        susan.boardCar(carOne);
+        System.out.println("---walter is getting off...");
+        walter.getOffCar(carOne);
         carOne.printManifest();
-        Walter.getOffCar(carOne);
+        System.out.println("----walter tries to get off again...");
+        walter.getOffCar(carOne);
     }
 }

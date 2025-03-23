@@ -1,10 +1,10 @@
 import java.util.ArrayList;
-public class Train {
+public class Train implements TrainRequirements{
 
     //Attributes
     private ArrayList<Car> cars;
     private Engine engine;
-    private int passengerCapacity;
+    private int maxCapacity;
     private String trainsName;
 
 
@@ -13,21 +13,18 @@ public class Train {
      * @param fuelType Train's engine's fuel type
      * @param fuelCapacity Train's engine's fuel capacity
      * @param nCars Train's number of cars
-     * @param passengerCapacity the amount of passengers each car can hold
+     * @param maxCapacity the amount of passengers each car can hold
      * @param trainsName the name of the train
      */
-    public Train(FuelType fuelType, double fuelCapacity, int nCars, int passengerCapacity, String trainsName){
+    public Train(FuelType fuelType, double fuelCapacity, int nCars, int maxCapacity, String trainsName){
         this.engine = new Engine(fuelType,0,fuelCapacity); 
         this.cars = new ArrayList<Car>();
         this.trainsName = trainsName;
-        this.passengerCapacity = passengerCapacity;
+        this.maxCapacity = maxCapacity;
         for (int i = 0; i <nCars; i++){
-            Car newCar = new Car(passengerCapacity);
+            Car newCar = new Car(maxCapacity);
             cars.add(newCar);
-
         }
-
-
     }
 
     /**
@@ -53,9 +50,9 @@ public class Train {
      * @return Maximum capacity
      */
     public int getMaxCapacity(){
-        return cars.size() * passengerCapacity;
-
+        return cars.size() * maxCapacity;
     }
+    
     /**
      * Accessor for the total seats left
      * adds the empty seats from each car in the Train
@@ -64,7 +61,7 @@ public class Train {
     public int seatsRemaining(){
         int seatsRemaining = 0;
         for (int i = 0; i < cars.size();i++){
-            seatsRemaining = seatsRemaining+ cars.get(i).getseatsRemaining();
+            seatsRemaining = seatsRemaining+ cars.get(i).seatsRemaining();
         }
         return seatsRemaining;
     }
@@ -81,40 +78,51 @@ public class Train {
         }
     }
 
+    //main for testing
     public static void main(String[] args) {
+        System.out.println("       ");
         Train amtrak = new Train(FuelType.ELECTRIC,200,5,4,"Amtrak Valley Flier");
         System.out.println(amtrak.getEngine());
-        Car cartwo = amtrak.getCar(1);
-            Passenger Sofia = new Passenger("Sofia");
-            cartwo.addPassenger(Sofia);
-            Passenger Maya = new Passenger("Maya");
-            cartwo.addPassenger(Maya);
+        Car carTwo = amtrak.getCar(1);
+            Passenger sofia = new Passenger("Sofia");
+            carTwo.addPassenger(sofia);
+            Passenger maya = new Passenger("Maya");
+            carTwo.addPassenger(maya);
 
-            Passenger Walter = new Passenger("Walter");
-            cartwo.addPassenger(Walter);
+            Passenger walter = new Passenger("Walter");
+            carTwo.addPassenger(walter);
 
-            Passenger Susan = new Passenger("Susan");
-            cartwo.addPassenger(Susan);
+            Passenger susan = new Passenger("Susan");
+            carTwo.addPassenger(susan);
 
         Car carOne = amtrak.getCar(0);
 
-            Passenger Kate = new Passenger("Kate");
-            carOne.addPassenger(Kate);
+            Passenger kate = new Passenger("Kate");
+            carOne.addPassenger(kate);
 
-            Passenger Cleo = new Passenger("Cleo");
-            carOne.addPassenger(Cleo);
+            Passenger cleo = new Passenger("Cleo");
+            carOne.addPassenger(cleo);
 
+        System.out.println("Lucy, Annika, and Catherine are borading Car 4:");
         Car carFive = amtrak.getCar(4);
 
-            Passenger Lucy = new Passenger("Lucy");
-            carFive.addPassenger(Lucy);
+            Passenger lucy = new Passenger("Lucy");
+            lucy.boardCar(carFive);
 
-            Passenger Annika = new Passenger("Annika");
-            carFive.addPassenger(Annika);
+            Passenger annika = new Passenger("Annika");
+            annika.boardCar(carFive);
 
-            Passenger Catherine = new Passenger("Catherine");
-            carFive.addPassenger(Catherine);
+            Passenger catherine = new Passenger("Catherine");
+            catherine.boardCar(carFive);
 
+
+        System.out.println("seats remaining: "+amtrak.seatsRemaining());
+        System.out.println("max capacity: "+amtrak.getMaxCapacity());
+        amtrak.printManifest();
+
+        System.out.println();
+        System.out.println("Catherine wants to board car 1 instead....");
+        catherine.boardCar(carOne);
 
         System.out.println("seats remaining: "+amtrak.seatsRemaining());
         System.out.println("max capacity: "+amtrak.getMaxCapacity());
