@@ -20,7 +20,7 @@ public class Train implements TrainRequirements{
         this.engine = new Engine(fuelType,0,fuelCapacity); 
         this.cars = new ArrayList<Car>();
         this.trainsName = trainsName;
-        this.maxCapacity = maxCapacity;
+        // this.maxCapacity = maxCapacity;
         for (int i = 0; i <nCars; i++){
             Car newCar = new Car(maxCapacity);
             cars.add(newCar);
@@ -52,7 +52,7 @@ public class Train implements TrainRequirements{
     public int getMaxCapacity(){
         return cars.size() * maxCapacity;
     }
-    
+
     /**
      * Accessor for the total seats left
      * adds the empty seats from each car in the Train
