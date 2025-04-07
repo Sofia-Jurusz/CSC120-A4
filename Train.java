@@ -7,6 +7,8 @@ public class Train implements TrainRequirements{
     private int maxCapacity;
     private String trainsName;
 
+    // `Train(FuelType fuelType, double fuelCapacity, int nCars, int passengerCapacity)`
+
 
     /**
      * Constructor for Train Class
@@ -16,13 +18,13 @@ public class Train implements TrainRequirements{
      * @param maxCapacity the amount of passengers each car can hold
      * @param trainsName the name of the train
      */
-    public Train(FuelType fuelType, double fuelCapacity, int nCars, int maxCapacity, String trainsName){
+    public Train(FuelType fuelType, double fuelCapacity, int nCars, int passengerCapacity, String trainsName){
         this.engine = new Engine(fuelType,0,fuelCapacity); 
         this.cars = new ArrayList<Car>();
         this.trainsName = trainsName;
-        // this.maxCapacity = maxCapacity;
+        this.maxCapacity = passengerCapacity * nCars;
         for (int i = 0; i <nCars; i++){
-            Car newCar = new Car(maxCapacity);
+            Car newCar = new Car(passengerCapacity);
             cars.add(newCar);
         }
     }

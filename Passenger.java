@@ -56,6 +56,14 @@ public class Passenger implements PassengerRequirements{
         }
     }
 
+    /**
+     * manipulator for the passenger's car
+     * @param c the car the passenger is boarding
+     */
+    public void changeCar(Car c){
+        this.passengersCar = c;
+    }
+
     //main for testing
     public static void main(String[] args) {
         Car carOne = new Car(1);

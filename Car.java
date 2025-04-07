@@ -3,7 +3,6 @@ public class Car implements CarRequirements{
 
     //Attributes
     private int capacity;
-    private int seatsRemaining;
     private ArrayList<Passenger> manifest;  
     
     /**
@@ -13,9 +12,6 @@ public class Car implements CarRequirements{
     public Car(int capacity){ 
         this.capacity = capacity;
         this.manifest = new ArrayList<Passenger>(capacity);
-        this.seatsRemaining = capacity;
-        
-
     }
 
     /**
@@ -31,7 +27,8 @@ public class Car implements CarRequirements{
      * @return seatsRemaining The spaces a Passenger could still occupy
      */
     public int seatsRemaining(){
-        return this.seatsRemaining;
+        int seatsRemaining = this.capacity - this.manifest.size();
+        return seatsRemaining;
     }
 
     /**
@@ -43,7 +40,7 @@ public class Car implements CarRequirements{
     public Boolean addPassenger(Passenger p){
         if (null == p.getPassengerCar()){
             this.manifest.add(p);
-            this.seatsRemaining = this.seatsRemaining - 1;
+            p.changeCar(this);
             return true;
         } else if(this == p.getPassengerCar()){
             System.out.println(p.getName() + " is already on this car!");
@@ -61,16 +58,14 @@ public class Car implements CarRequirements{
      * @return False if the removing was unsuccesful
      */
     public Boolean removePassenger(Passenger p){
-        int Manifest_size = this.manifest.size();
-        if (Manifest_size == 0) {
+        int manifestSize = this.manifest.size();
+        if (manifestSize == 0) {
             System.out.println("This car is empty! There is no one to remove!");
             return false;
-        }
-        else {
-            for (int i = 0; i < Manifest_size; i++) {
+        } else {
+            for (int i = 0; i < manifestSize; i++) {
                 if (p == this.manifest.get(i)){
                     this.manifest.remove(p);
-                    this.seatsRemaining = this.seatsRemaining + 1;
                     return true;
                 }   
             }
@@ -98,38 +93,47 @@ public class Car implements CarRequirements{
 
     //main for testing
     public static void main(String[] args) {
+
         Car myCar = new Car(10);
-        Passenger sofia = new Passenger("Sofia");
-        System.out.println("This is an empty car");
         System.out.println("Capacity: "+ myCar.getCapacity());
         System.out.println("Seats Remaining: " + myCar.seatsRemaining());
-        myCar.printManifest();
-
-        System.out.println("Now we are adding a passenger: "+ sofia.getName());
+        Passenger sofia = new Passenger("Sofia");
         myCar.addPassenger(sofia);
         System.out.println("Capacity: "+ myCar.getCapacity());
         System.out.println("Seats Remaining: " + myCar.seatsRemaining());
-        myCar.printManifest();
-
-        Passenger cleo = new Passenger("Cleo");
-        System.out.println("Now we are adding a passenger: "+ cleo.getName());
-        myCar.addPassenger(cleo);
+        myCar.addPassenger(sofia);
         System.out.println("Capacity: "+ myCar.getCapacity());
         System.out.println("Seats Remaining: " + myCar.seatsRemaining());
-        myCar.printManifest();
+        // System.out.println("This is an empty car");
+        // System.out.println("Capacity: "+ myCar.getCapacity());
+        // System.out.println("Seats Remaining: " + myCar.seatsRemaining());
+        // myCar.printManifest();
 
-        System.out.println("Sofia is going to leave the train");
-        myCar.removePassenger(sofia);
-        System.out.println("Capacity: "+ myCar.getCapacity());
-        System.out.println("Seats Remaining: " + myCar.seatsRemaining());
-        myCar.printManifest();
+        // System.out.println("Now we are adding a passenger: "+ sofia.getName());
+       
+        // System.out.println("Capacity: "+ myCar.getCapacity());
+        // System.out.println("Seats Remaining: " + myCar.seatsRemaining());
+        // myCar.printManifest();
 
-        Passenger maya = new Passenger("Maya");
-        System.out.println("Maya is going to leave the train");
-        System.out.println(myCar.removePassenger(maya));
+        // Passenger cleo = new Passenger("Cleo");
+        // System.out.println("Now we are adding a passenger: "+ cleo.getName());
+        // myCar.addPassenger(cleo);
+        // System.out.println("Capacity: "+ myCar.getCapacity());
+        // System.out.println("Seats Remaining: " + myCar.seatsRemaining());
+        // myCar.printManifest();
 
-        System.out.println("Cleo is getting on the train");
-        System.out.println(myCar.addPassenger(cleo));
+        // System.out.println("Sofia is going to leave the train");
+        // myCar.removePassenger(sofia);
+        // System.out.println("Capacity: "+ myCar.getCapacity());
+        // System.out.println("Seats Remaining: " + myCar.seatsRemaining());
+        // myCar.printManifest();
+
+        // Passenger maya = new Passenger("Maya");
+        // System.out.println("Maya is going to leave the train");
+        // System.out.println(myCar.removePassenger(maya));
+
+        // System.out.println("Cleo is getting on the train");
+        // System.out.println(myCar.addPassenger(cleo));
     }
 
 }
